@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 
-var primes = new List<int>(10000000) { 2, 3 , 5, 7};
+var primes = new List<int>(10000000) { 2, 3 , 5, 7, 11, 13};
 
 bool IsPrime(int number)
 {
@@ -40,7 +40,7 @@ List<int> GetPrimes(int n)
     while (primeCounter != n)
     {
 
-        if (i % 3 == 0 || i % 5 == 0 || i % 7 == 0)
+        if (i % 3 == 0 || i % 5 == 0 || i % 7 == 0 || i % 11 == 0 || i % 13 == 0 )
         {
         }
 
@@ -63,4 +63,7 @@ GetPrimes(2000000);
 
 watch.Stop();
 
+
+
 Console.WriteLine($"Elapsed {watch.ElapsedMilliseconds}ms");
+
