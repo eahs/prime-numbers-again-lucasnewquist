@@ -1,81 +1,66 @@
-﻿using System;
+﻿// See https://aka.ms/new-console-template for more information
+
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 
-namespace PrimeNumbersAgain
+var primes = new List<int>(10000000) { 2, 3 , 5, 7};
+
+bool IsPrime(int number)
 {
-    class Program
+    int sqrt = (int)Math.Sqrt(number);
+
+    for (int i = 0; i < primes[i]; i++)
     {
-        static void Main(string[] args)
+        
+
+        if (number % primes[i] == 0)
         {
-            int n, prime;
-            Stopwatch timer = new Stopwatch();
-
-            PrintBanner();
-            n = GetNumber();
-
-            timer.Start();
-            prime = FindNthPrime(n);
-            timer.Stop();
-            
-            
-            Console.WriteLine($"\nToo easy.. {prime} is the nth prime when n is {n}. I found that answer in {timer.Elapsed.Seconds} seconds.");
-
-            EvaluatePassingTime(timer.Elapsed.Seconds);
+            return false;
         }
 
-        static int FindNthPrime(int n)
-        {
-            return 0;
-        }
-
-        static int GetNumber()
-        {
-            int n = 0;
-            while (true)
-            {
-                Console.Write("Which nth prime should I find?: ");
-                
-                string num = Console.ReadLine();
-                if (Int32.TryParse(num, out n))
-                {
-                    return n;
-                }
-
-                Console.WriteLine($"{num} is not a valid number.  Please try again.\n");
-            }
-        }
-
-        static void PrintBanner()
-        {
-            Console.WriteLine(".................................................");
-            Console.WriteLine(".#####...#####...######..##...##..######...####..");
-            Console.WriteLine(".##..##..##..##....##....###.###..##......##.....");
-            Console.WriteLine(".#####...#####.....##....##.#.##..####.....####..");
-            Console.WriteLine(".##......##..##....##....##...##..##..........##.");
-            Console.WriteLine(".##......##..##..######..##...##..######...####..");
-            Console.WriteLine(".................................................\n\n");
-            Console.WriteLine("Nth Prime Solver O-Matic Online..\nGuaranteed to find primes up to 2 million in under 30 seconds!\n\n");
-            
-        }
-
-        static void EvaluatePassingTime(int time)
-        {
-            Console.WriteLine("\n");
-            Console.Write("Time Check: ");
-
-            if (time <= 10)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Pass");
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Fail");
-            }
-
-            Console.ForegroundColor = ConsoleColor.Gray;
-            
-        }
+        if (primes[i] > sqrt)
+            break;
     }
+
+    return true;
 }
+
+List<int> GetPrimes(int n)
+{
+    int primeCounter = 0;
+
+    int i = 3;
+
+    if (n < 3)
+        return primes.Take(n).ToList();
+
+    while (primeCounter != n)
+    {
+
+        if (i % 3 == 0 || i % 5 == 0 || i % 7 == 0)
+        {
+        }
+
+        else if (IsPrime(i))
+        {
+            primes.Add(i);
+            primeCounter++;
+        }
+
+        i += 2;
+    }
+
+    return primes;
+}
+
+Stopwatch watch = new Stopwatch();
+
+watch.Start();
+GetPrimes(2000000);
+
+watch.Stop();
+
+Console.WriteLine($"Elapsed {watch.ElapsedMilliseconds}ms");
